@@ -23,6 +23,14 @@ bool mountCtrNand(void)
     return f_mount(&fs, "1:", 1) == FR_OK && f_chdrive("1:") == FR_OK;
 }
 
+bool fileExists(const char *path)
+{
+    FIL file;
+    if(f_open(&file, path, FA_READ) != FR_OK) return false;
+    f_close(&file);
+    return true;
+}
+
 u32 fileRead(void *dest, const char *path, u32 size, u32 maxSize)
 {
     FIL file;

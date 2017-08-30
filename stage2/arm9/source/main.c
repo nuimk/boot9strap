@@ -19,12 +19,13 @@ static void invokeArm11Function(Arm11Operation op)
 {
     while(*operation != ARM11_READY);
     *operation = op;
-    while(*operation != ARM11_READY); 
+    while(*operation != ARM11_READY);
 }
 
 static void loadFirm(bool isNand)
 {
-    static const char *firmName = "boot.firm";
+    bool isBootNtrExists = fileExists("ntrboot.firm");
+    const char *firmName = isBootNtrExists ? "ntrboot.firm" : "boot.firm";
     Firm *firmHeader = (Firm *)0x080A0000;
     if(fileRead(firmHeader, firmName, 0x200, 0) != 0x200) return;
 
